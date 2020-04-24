@@ -1,0 +1,7 @@
+package com.assignment.exception;
+
+public class IncorrectEmployeeIdException extends Exception{
+	public IncorrectEmployeeIdException(String empId) {
+		super(empId);
+	}
+}

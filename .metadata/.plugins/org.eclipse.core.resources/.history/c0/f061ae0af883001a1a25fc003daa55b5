@@ -1,0 +1,29 @@
+package com.assignment;
+
+import java.util.Arrays;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+import com.assignment.dao.AddressDao;
+import com.assignment.dao.EmployeeDao;
+import com.assignment.service.EmployeeService;
+
+public class CommandLinerRunner implements CommandLineRunner{
+	
+	@Autowired
+	private EmployeeService employeeService;
+	@Override
+	public void run(String... args) throws Exception {
+		EmployeeDao employeeDao=new EmployeeDao(1,"Prashant", "STG",
+				Arrays.asList(new AddressDao(1,"DE 105/3","Kolkata","WB"),
+						new AddressDao(2,"16B madan Chatterjee lane","Kolkata","WB"),
+						new AddressDao(3,"16A madan Chatterjee lane","Kolkata","WB")));
+		//employeeService.addNewEmployee(employeeDao);
+		System.out.println(employeeService.getEmployeeById(1));
+		System.out.println(employeeService.getEmployeeById(1));
+		System.out.println(employeeService.getEmployeeById(1));
+	}
+
+}

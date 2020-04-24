@@ -1,0 +1,7 @@
+package com.assignment.exception;
+
+public class IncorrectEmployeeWithNameException extends Exception{
+	public IncorrectEmployeeWithNameException(String message) {
+		super(message);
+	}
+}

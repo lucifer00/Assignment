@@ -1,0 +1,9 @@
+package com.assignment.exception;
+
+public class IncorrectEmployeeIdException extends Exception{
+	private static final long serialVersionUID = 1L;
+
+	public IncorrectEmployeeIdException(String empId) {
+		super(empId);
+	}
+}

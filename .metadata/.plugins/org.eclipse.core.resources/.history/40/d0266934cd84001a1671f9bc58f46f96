@@ -1,0 +1,31 @@
+package com.assignment;
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.cache.CacheManager;
+import org.springframework.stereotype.Component;
+
+import com.assignment.dao.AddressDao;
+import com.assignment.dao.EmployeeDao;
+import com.assignment.service.EmployeeService;
+
+@Component
+public class CommandLinerRunner implements CommandLineRunner{
+	
+	@Autowired
+	private EmployeeService employeeService;
+	
+	@Autowired
+	private CacheManager cacheManager;
+	@Override
+	public void run(String... args) throws Exception {
+		List<EmployeeDao> employeeList=employeeService.getAllEmployees();
+		employeeList.forEach(t->{
+			cacheManager.getCache("second-level-cache").put(t.getEmpId(), t);
+		});
+	}
+
+}
