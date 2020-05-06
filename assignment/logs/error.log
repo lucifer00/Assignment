@@ -1,0 +1,2 @@
+2020-05-06 01:05:15 [http-nio-8080-exec-1] ERROR c.assignment.CustomExceptionHandler - com.assignment.exception.IncorrectEmployeeWithIdException: 1
+2020-05-06 01:13:05 [http-nio-8080-exec-1] ERROR c.assignment.CustomExceptionHandler - com.assignment.exception.IncorrectEmployeeWithIdException: 1

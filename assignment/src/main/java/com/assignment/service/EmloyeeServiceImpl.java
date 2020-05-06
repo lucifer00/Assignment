@@ -10,6 +10,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import org.dozer.DozerBeanMapper;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache.ValueWrapper;
 import org.springframework.cache.CacheManager;
@@ -34,43 +35,54 @@ public class EmloyeeServiceImpl implements EmployeeService {
 	private EmployeeRepository employeeRepository;
 	
 	@Autowired
+	private Logger logger;
+	@Autowired
 	private AddressRepository addressRepository;
 	@Autowired
 	private CacheManager cacheManager;
 	@Override
 	public EmployeeDao addNewEmployee(EmployeeDao employeeDao) {
+		logger.debug("Add Employee method invocated");
 		Employee employee = new DozerBeanMapper().map(employeeDao, Employee.class);
 		Employee returnedOnSave = employeeRepository.save(employee);
 		if (returnedOnSave != null) {
 			cacheManager.getCache("first-level-cache").put(employeeDao.getEmpId(), employeeDao);
 			cacheManager.getCache("second-level-cache").put(employeeDao.getEmpId(), employeeDao);
+			logger.debug("Employee got added successfully");
 			return employeeDao;
 		}
+		logger.debug("There was some error while adding a new Employee");
 		return null;
 	}
 
 	@Override
 	public EmployeeDao getEmployeeById(int id)throws IncorrectEmployeeWithIdException{
+		logger.debug("Get employee by Id method invocated");
 		EmployeeDao employeeDao=null;
 		ValueWrapper valueWrapper=cacheManager.getCache("first-level-cache").get(id);
 		if(valueWrapper!=null) {
+			logger.debug("Employee found in the first level cache");
 			return (EmployeeDao)valueWrapper.get();
 			}
 		else {
 			valueWrapper=cacheManager.getCache("second-level-cache").get(id);
 			if(valueWrapper==null) {
+				logger.debug("Record absent from the caches");
 				Optional<Employee> employee=employeeRepository.findById(id);
 				if(employee.isPresent()){
 					employeeDao=new DozerBeanMapper().map(employee, EmployeeDao.class);
+					logger.debug("Employee record being updated in both the caches");
 					cacheManager.getCache("first-level-cache").put(id,employeeDao);
 					cacheManager.getCache("second-level-cache").put(id,employeeDao);
 				}
 				else {
+					logger.debug("Employee not found  throwing exception");
 					throw new IncorrectEmployeeWithIdException(""+id);
 				}
 			}
 			else {
 				employeeDao=(EmployeeDao)valueWrapper.get();
+				logger.debug("Employee found in second level cache");
 				cacheManager.getCache("first-level-cache").put(id,employeeDao);
 			}
 			return employeeDao;
@@ -78,6 +90,7 @@ public class EmloyeeServiceImpl implements EmployeeService {
 	}
 	@Override
 	public void addBulkEmployeeData(List<EmployeeDao> employees) {
+		logger.debug("A new executor service created");
 		ExecutorService executorService = Executors.newSingleThreadExecutor();
 
 		Runnable runnable = () -> {
@@ -86,28 +99,35 @@ public class EmloyeeServiceImpl implements EmployeeService {
 				employeeRepository.save(employee);
 			});
 		};
+		logger.debug("Bulk operation been done on separate thread");
 		executorService.submit(runnable);
+		logger.debug("Stopping the thread pool");
 		executorService.shutdown();
+		logger.debug("Invoking the auto update cache method , to update the seconf level cache");
 		autoUpdateCache();
 	}
 
 	@Override
 	public List<EmployeeDao> getAllEmployees() {
+		logger.debug("Method that fethches all the employees and their description");
 		List<Employee> allEmployees = employeeRepository.findAll();
 		List<EmployeeDao> toRet = new ArrayList<>();
 		allEmployees.forEach(t -> {
 			EmployeeDao employeeDao = new DozerBeanMapper().map(t, EmployeeDao.class);
 			toRet.add(employeeDao);
 		});
+		logger.debug("Method ran successfully {}",toRet);
 		return toRet;
 	}
 	@Scheduled(fixedRate = 60000*2)
 	@Override
 	public void autoUpdateCache() {
+		logger.debug("This method auto updates 2nd level cache every 2 mins");
 		List<EmployeeDao> employeeList=getAllEmployees();
 		employeeList.forEach(t->{
 			cacheManager.getCache("second-level-cache").put(t.getEmpId(), t);
 		});
+		logger.debug("Cache updated successfully");
 	}
 	@Override
 	public EmployeeDao getByName(String ename)throws IncorrectEmployeeWithNameException {
@@ -131,17 +151,21 @@ public class EmloyeeServiceImpl implements EmployeeService {
 		return toRet;
 	}
 	public EmployeeDao checkIfNameExists(Map<Object,Element> employeeMap,String ename) {
+		logger.debug("Checks if an employee with eName exists in the records or not");
 		for(Map.Entry<Object, Element> entry:employeeMap.entrySet()) {
 			EmployeeDao employeeDao=(EmployeeDao)entry.getValue().getObjectValue();
 			if(employeeDao.getEmpName().equalsIgnoreCase(ename)) {
+				logger.debug("Employee exists , returning {}",employeeDao);
 				return employeeDao;
 			}
 		}
+		logger.debug("No employee with such name exists");
 		return null;
 	}
 
 	@Override
 	public Set<EmployeeDao> getByPincode(long pincode) {
+		logger.debug("Method returns employees living in the given PinCode");
 		List<Employee> employeeList=employeeRepository.findByPincode(pincode);
 		Set<EmployeeDao> toRet=new HashSet<>();
 		employeeList.forEach(t->{
@@ -152,11 +176,14 @@ public class EmloyeeServiceImpl implements EmployeeService {
 	}
 	@Override
 	public EmployeeDao addNewAddress(int empId,AddressDao address) {
+		logger.debug("Adds a new address for an Employee");
 		Address addressNew=new DozerBeanMapper().map(address, Address.class);
 		Employee employee=employeeRepository.getOne(empId);
 		employee.getAddresses().add(addressNew);
 		employeeRepository.saveAndFlush(employee);
+		logger.debug("Address addedd successfully");
 		EmployeeDao employeeDao=new DozerBeanMapper().map(employee, EmployeeDao.class);
+		logger.debug("Caches getting updated after address update");
 		cacheManager.getCache("first-level-cache").put(empId, employeeDao);
 		cacheManager.getCache("second-level-cache").put(empId, employeeDao);
 		return employeeDao;
@@ -164,11 +191,14 @@ public class EmloyeeServiceImpl implements EmployeeService {
 
 	@Override
 	public EmployeeDao deleteAddressForEmployee(int empId, int addressId) {
+		logger.debug("Deletes address of an employee");
 		EmployeeDao employeeDao=null;
 		addressRepository.deleteById(addressId);
+		logger.debug("Address got deleted successfully");
 		Optional<Employee> employee=employeeRepository.findById(empId);
 		if(employee.isPresent()) {
 			employeeDao=new DozerBeanMapper().map(employee.get(),EmployeeDao.class);
+			logger.debug("Caches getting updated after Address deletion");
 			cacheManager.getCache("first-level-cache").put(empId, employeeDao);
 			cacheManager.getCache("second-level-cache").put(empId, employeeDao);
 		}
@@ -176,9 +206,12 @@ public class EmloyeeServiceImpl implements EmployeeService {
 	}
 	@Override
 	public void deleteEmployeeById(int empId) throws IncorrectEmployeeWithIdException {
+		logger.debug("Deletes employee record");
 		EmployeeDao employeeDao=getEmployeeById(empId);
 		if(employeeDao!=null) {
 			employeeRepository.deleteById(empId);
+			logger.debug("Employee got deleted successfully");
+			logger.debug("Caches updation after employee deletion");
 			cacheManager.getCache("first-level-cache").evict(empId);
 			cacheManager.getCache("second-level-cache").evict(empId);
 		}

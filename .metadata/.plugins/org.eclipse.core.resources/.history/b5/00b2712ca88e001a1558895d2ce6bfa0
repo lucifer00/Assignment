@@ -1,0 +1,33 @@
+2020-05-05 01:49:41 [main] INFO  com.assignment.AssignmentApplication - Starting AssignmentApplication on DESKTOP-K6K5TV2 with PID 26652 (C:\Users\Prashant Jha\Documents\Assignment\assignment\target\classes started by Prashant Jha in C:\Users\Prashant Jha\Documents\Assignment\assignment)
+2020-05-05 01:49:41 [main] DEBUG com.assignment.AssignmentApplication - Running with Spring Boot v2.2.6.RELEASE, Spring v5.2.5.RELEASE
+2020-05-05 01:49:41 [main] INFO  com.assignment.AssignmentApplication - No active profile set, falling back to default profiles: default
+2020-05-05 01:49:57 [main] INFO  com.assignment.AssignmentApplication - Started AssignmentApplication in 16.36 seconds (JVM running for 18.563)
+2020-05-05 01:49:57 [main] DEBUG com.assignment.AssignmentApplication - Second level cache getting updated
+2020-05-05 01:49:58 [main] DEBUG com.assignment.AssignmentApplication - Cache updation completed
+2020-05-05 01:51:36 [main] INFO  com.assignment.AssignmentApplication - Starting AssignmentApplication on DESKTOP-K6K5TV2 with PID 15112 (C:\Users\Prashant Jha\Documents\Assignment\assignment\target\classes started by Prashant Jha in C:\Users\Prashant Jha\Documents\Assignment\assignment)
+2020-05-05 01:51:36 [main] DEBUG com.assignment.AssignmentApplication - Running with Spring Boot v2.2.6.RELEASE, Spring v5.2.5.RELEASE
+2020-05-05 01:51:36 [main] INFO  com.assignment.AssignmentApplication - No active profile set, falling back to default profiles: default
+2020-05-05 01:51:45 [main] INFO  com.assignment.AssignmentApplication - Started AssignmentApplication in 9.255 seconds (JVM running for 11.049)
+2020-05-05 01:51:45 [main] DEBUG com.assignment.AssignmentApplication - Second level cache getting updated
+2020-05-05 01:51:45 [main] DEBUG com.assignment.AssignmentApplication - Cache updation completed
+2020-05-05 01:56:01 [main] INFO  com.assignment.AssignmentApplication - Starting AssignmentApplication on DESKTOP-K6K5TV2 with PID 21116 (C:\Users\Prashant Jha\Documents\Assignment\assignment\target\classes started by Prashant Jha in C:\Users\Prashant Jha\Documents\Assignment\assignment)
+2020-05-05 01:56:01 [main] DEBUG com.assignment.AssignmentApplication - Running with Spring Boot v2.2.6.RELEASE, Spring v5.2.5.RELEASE
+2020-05-05 01:56:01 [main] INFO  com.assignment.AssignmentApplication - No active profile set, falling back to default profiles: default
+2020-05-05 01:56:18 [main] INFO  com.assignment.AssignmentApplication - Started AssignmentApplication in 18.178 seconds (JVM running for 19.909)
+2020-05-05 01:56:18 [main] DEBUG com.assignment.AssignmentApplication - Second level cache getting updated
+2020-05-05 01:56:19 [main] DEBUG com.assignment.AssignmentApplication - Cache updation completed
+2020-05-05 01:56:28 [http-nio-8080-exec-1] ERROR com.assignment.AssignmentApplication - 1
+2020-05-05 02:05:00 [main] INFO  com.assignment.AssignmentApplication - Starting AssignmentApplication on DESKTOP-K6K5TV2 with PID 26264 (C:\Users\Prashant Jha\Documents\Assignment\assignment\target\classes started by Prashant Jha in C:\Users\Prashant Jha\Documents\Assignment\assignment)
+2020-05-05 02:05:00 [main] DEBUG com.assignment.AssignmentApplication - Running with Spring Boot v2.2.6.RELEASE, Spring v5.2.5.RELEASE
+2020-05-05 02:05:00 [main] INFO  com.assignment.AssignmentApplication - No active profile set, falling back to default profiles: default
+2020-05-05 02:05:08 [main] INFO  com.assignment.AssignmentApplication - Started AssignmentApplication in 8.627 seconds (JVM running for 10.362)
+2020-05-05 02:05:08 [main] DEBUG com.assignment.AssignmentApplication - Second level cache getting updated
+2020-05-05 02:05:08 [main] DEBUG com.assignment.AssignmentApplication - Cache updation completed
+2020-05-05 02:05:13 [http-nio-8080-exec-1] ERROR com.assignment.AssignmentApplication - 1
+2020-05-05 13:41:23 [main] INFO  com.assignment.AssignmentApplication - Starting AssignmentApplication on DESKTOP-K6K5TV2 with PID 34360 (C:\Users\Prashant Jha\Documents\Assignment\assignment\target\classes started by Prashant Jha in C:\Users\Prashant Jha\Documents\Assignment\assignment)
+2020-05-05 13:41:23 [main] DEBUG com.assignment.AssignmentApplication - Running with Spring Boot v2.2.6.RELEASE, Spring v5.2.5.RELEASE
+2020-05-05 13:41:23 [main] INFO  com.assignment.AssignmentApplication - No active profile set, falling back to default profiles: default
+2020-05-05 13:41:31 [main] INFO  com.assignment.AssignmentApplication - Started AssignmentApplication in 8.096 seconds (JVM running for 9.923)
+2020-05-05 13:41:31 [main] DEBUG com.assignment.AssignmentApplication - Second level cache getting updated
+2020-05-05 13:41:31 [main] DEBUG com.assignment.AssignmentApplication - Cache updation completed
+2020-05-05 13:41:40 [http-nio-8080-exec-8] ERROR c.assignment.CustomExceptionHandler - 1

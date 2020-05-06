@@ -3,6 +3,7 @@ package com.assignment;
 import java.util.Arrays;
 import java.util.List;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.cache.CacheManager;
@@ -19,13 +20,18 @@ public class CommandLinerRunner implements CommandLineRunner{
 	private EmployeeService employeeService;
 	
 	@Autowired
+	private Logger LOGGER;
+	
+	@Autowired
 	private CacheManager cacheManager;
 	@Override
 	public void run(String... args) throws Exception {
+		LOGGER.debug("Second level cache getting updated");
 		List<EmployeeDao> employeeList=employeeService.getAllEmployees();
 		employeeList.forEach(t->{
 			cacheManager.getCache("second-level-cache").put(t.getEmpId(), t);
 		});
+		LOGGER.debug("Cache updation completed");
 	}
 	
 }
